@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | TransitOps{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+    <h2 class="fw-bold">Dashboard</h2>
+    <p class="text-muted">Fleet operations overview</p>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Active Vehicles</h6>
+                <h2 class="fw-bold">{{ active_vehicles }}</h2>
+                <i class="fa-solid fa-truck fa-2x text-primary"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Available Vehicles</h6>
+                <h2 class="fw-bold">{{ available_vehicles }}</h2>
+                <i class="fa-solid fa-circle-check fa-2x text-success"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">In Maintenance</h6>
+                <h2 class="fw-bold">{{ vehicles_in_maintenance }}</h2>
+                <i class="fa-solid fa-screwdriver-wrench fa-2x text-warning"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Active Trips</h6>
+                <h2 class="fw-bold">{{ active_trips }}</h2>
+                <i class="fa-solid fa-route fa-2x text-danger"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Pending Trips</h6>
+                <h2 class="fw-bold">{{ pending_trips }}</h2>
+                <i class="fa-solid fa-clock fa-2x text-secondary"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Drivers On Duty</h6>
+                <h2 class="fw-bold">{{ drivers_on_duty }}</h2>
+                <i class="fa-solid fa-id-card fa-2x text-info"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Fleet Utilization</h6>
+                <h2 class="fw-bold">{{ fleet_utilization }}%</h2>
+
+                <div class="progress mt-3">
+                    <div class="progress-bar" role="progressbar" style="width: {{ fleet_utilization }}%;">
+                        {{ fleet_utilization }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

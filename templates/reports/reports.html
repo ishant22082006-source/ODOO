@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<div>
+
+<h2 class="fw-bold">
+Reports & Analytics
+</h2>
+
+<p class="text-muted">
+Fleet Performance Dashboard
+</p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h6>Total Vehicles</h6>
+
+<h2>
+
+{{ total_vehicles }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h6>Available</h6>
+
+<h2>
+
+{{ available_vehicles }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h6>On Trip</h6>
+
+<h2>
+
+{{ on_trip }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h6>In Shop</h6>
+
+<h2>
+
+{{ in_shop }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5>Fuel Cost</h5>
+
+<h3>
+
+₹ {{ fuel_cost }}
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5>Maintenance Cost</h5>
+
+<h3>
+
+₹ {{ maintenance_cost }}
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5>Operational Cost</h5>
+
+<h3>
+
+₹ {{ operational_cost }}
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h4>
+
+Fleet Utilization
+
+</h4>
+
+<div class="progress mt-3">
+
+<div
+class="progress-bar bg-success"
+style="width: {{ fleet_utilization }}%;">
+
+{{ fleet_utilization }}%
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<canvas id="fleetChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx=document.getElementById('fleetChart');
+
+new Chart(ctx,{
+
+type:'pie',
+
+data:{
+
+labels:[
+'Available',
+'On Trip',
+'In Shop',
+'Retired'
+],
+
+datasets:[{
+
+data:[
+
+{{ available_vehicles }},
+
+{{ on_trip }},
+
+{{ in_shop }},
+
+{{ retired }}
+
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+{% endblock %}

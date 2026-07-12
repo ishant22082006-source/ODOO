@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Drivers | TransitOps{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold">Driver Management</h2>
+        <p class="text-muted mb-0">Manage drivers and license compliance</p>
+    </div>
+
+    <a href="{% url 'driver_create' %}" class="btn btn-primary">
+        <i class="fa-solid fa-plus me-1"></i>
+        Add Driver
+    </a>
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+
+            <div class="col-md-3">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search driver name"
+                    value="{{ request.GET.search }}"
+                >
+            </div>
+
+            <div class="col-md-3">
+                <select name="status" class="form-select">
+                    <option value="">All Status</option>
+
+                    {% for value, label in status_choices %}
+                        <option value="{{ value }}"
+                            {% if request.GET.status == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select name="category" class="form-select">
+                    <option value="">All License Categories</option>
+
+                    {% for value, label in category_choices %}
+                        <option value="{{ value }}"
+                            {% if request.GET.category == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-dark">
+                    <i class="fa-solid fa-filter me-1"></i>
+                    Filter
+                </button>
+
+                <a href="{% url 'driver_list' %}"
+                   class="btn btn-outline-secondary">
+                    Reset
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>License Number</th>
+                        <th>Category</th>
+                        <th>Expiry Date</th>
+                        <th>Contact</th>
+                        <th>Safety Score</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for driver in drivers %}
+                    <tr>
+                        <td class="fw-bold">{{ driver.name }}</td>
+                        <td>{{ driver.license_number }}</td>
+                        <td>{{ driver.license_category }}</td>
+
+                        <td>
+                            {{ driver.license_expiry_date }}
+
+                            {% if driver.is_license_expired %}
+                                <span class="badge bg-danger">
+                                    Expired
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ driver.contact_number }}</td>
+                        <td>{{ driver.safety_score }}</td>
+
+                        <td>
+                            {% if driver.status == "Available" %}
+                                <span class="badge bg-success">Available</span>
+                            {% elif driver.status == "On Trip" %}
+                                <span class="badge bg-primary">On Trip</span>
+                            {% elif driver.status == "Off Duty" %}
+                                <span class="badge bg-secondary">Off Duty</span>
+                            {% else %}
+                                <span class="badge bg-danger">Suspended</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{% url 'driver_update' driver.pk %}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+
+                            <a href="{% url 'driver_delete' driver.pk %}"
+                               class="btn btn-sm btn-outline-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">
+                            No drivers found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Fuel Logs{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+
+    <div>
+
+        <h2 class="fw-bold">Fuel Logs</h2>
+
+        <p class="text-muted">
+            Track fuel consumption
+        </p>
+
+    </div>
+
+    <a href="{% url 'fuel_create' %}"
+       class="btn btn-primary">
+
+        Add Fuel Log
+
+    </a>
+
+</div>
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<div class="table-responsive">
+
+<table class="table table-hover">
+
+<thead>
+
+<tr>
+
+<th>Vehicle</th>
+<th>Date</th>
+<th>Liters</th>
+<th>Cost</th>
+<th>Odometer</th>
+<th>Remarks</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for fuel in fuel_logs %}
+
+<tr>
+
+<td>{{ fuel.vehicle.registration_number }}</td>
+
+<td>{{ fuel.date }}</td>
+
+<td>{{ fuel.liters }}</td>
+
+<td>₹ {{ fuel.cost }}</td>
+
+<td>{{ fuel.odometer }}</td>
+
+<td>{{ fuel.remarks|default:"-" }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Fuel Logs Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
